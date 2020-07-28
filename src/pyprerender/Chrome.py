@@ -1,5 +1,6 @@
 import pychrome
 import subprocess
+import time
 
 
 class Chrome:
@@ -7,12 +8,14 @@ class Chrome:
         self.options = options
         self.chrome_location = '/usr/bin/google-chrome-stable'
         self.chrome_process = subprocess.Popen([self.chrome_location,
-                                                # '--headless',
+                                                '--headless',
                                                 '--disable-gpu',
                                                 '--remote-debugging-port=' + self.options['browser_debugging_port'],
                                                 '--hide-scrollbars',
                                                 ])
         self.browser = None
+        time.sleep(2)
+        self.connect()
 
     def connect(self):
         self.browser = pychrome.Browser(url='http://127.0.0.1:' + self.options['browser_debugging_port'])
@@ -23,7 +26,6 @@ class Chrome:
     def navigate(self, tab, url, event_handler=None):
         # start the tab
         if event_handler:
-            print('Event handler attached')
             eh = event_handler(self.browser, tab)
             tab.Page.frameStartedLoading = eh.frame_started_loading
             tab.Page.frameStoppedLoading = eh.frame_stopped_loading
