@@ -1,4 +1,4 @@
-from src.pyprerender.Chrome import Chrome
+from pyprerender import Chrome
 import time
 import threading
 import base64

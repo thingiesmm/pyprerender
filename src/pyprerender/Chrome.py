@@ -46,3 +46,7 @@ class Chrome:
 
         # close tab
         self.browser.close_tab(tab)
+
+    def __del__(self):
+        self.chrome_process.kill()
+
