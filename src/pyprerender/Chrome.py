@@ -6,7 +6,7 @@ import time
 class Chrome:
     def __init__(self, options):
         self.options = options
-        self.chrome_location = '/usr/bin/google-chrome-stable'
+        self.chrome_location = options['chrome_location']
         self.chrome_process = subprocess.Popen([self.chrome_location,
                                                 '--headless',
                                                 '--disable-gpu',
@@ -23,7 +23,7 @@ class Chrome:
     def new_tab(self):
         return self.browser.new_tab()
 
-    def navigate(self, tab, url, event_handler=None):
+    def navigate(self, tab, url, event_handler=None, tab_wait=10):
         # start the tab
         if event_handler:
             eh = event_handler(self.browser, tab)
@@ -39,7 +39,7 @@ class Chrome:
         tab.Page.navigate(url=url)
 
         # wait for loading
-        tab.wait(10)
+        tab.wait(tab_wait)
 
         # stop the tab (stop handle events and stop recv message from chrome)
         tab.stop()

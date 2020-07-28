@@ -34,10 +34,10 @@ class ScreenshotEventHandler(object):
                     self.tab.stop()
 
 
-
 if __name__ == '__main__':
     options = {
-        'browser_debugging_port': '9222'
+        'browser_debugging_port': '9222',
+        'chrome_location': '/usr/bin/google-chrome-stable'
     }
     chrome = Chrome(options=options)
     tab = chrome.new_tab()
