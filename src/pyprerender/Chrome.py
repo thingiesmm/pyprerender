@@ -7,12 +7,15 @@ class Chrome:
     def __init__(self, options):
         self.options = options
         self.chrome_location = options['chrome_location']
-        self.chrome_process = subprocess.Popen([self.chrome_location,
-                                                '--headless',
-                                                '--disable-gpu',
-                                                '--remote-debugging-port=' + self.options['browser_debugging_port'],
-                                                '--hide-scrollbars',
-                                                ])
+        params = [self.chrome_location,
+                  '--headless',
+                  '--disable-gpu',
+                  '--remote-debugging-port=' + self.options['browser_debugging_port'],
+                  '--hide-scrollbars',
+                  ]
+        if 'chrome_params' in options:
+            params.extend(options['chrome_params'])
+        self.chrome_process = subprocess.Popen(params)
         self.browser = None
         time.sleep(1)
         self.connect()
