@@ -14,7 +14,7 @@ class Chrome:
                                                 '--hide-scrollbars',
                                                 ])
         self.browser = None
-        time.sleep(2)
+        time.sleep(1)
         self.connect()
 
     def connect(self):
@@ -22,6 +22,12 @@ class Chrome:
 
     def new_tab(self):
         return self.browser.new_tab()
+
+    def close_tab(self, tab):
+        try:
+            self.browser.close_tab(tab)
+        except:
+            pass
 
     def navigate(self, tab, url, event_handler=None, tab_wait=10):
         # start the tab
@@ -37,16 +43,14 @@ class Chrome:
         tab.Page.enable()
         # call method with timeout
         tab.Page.navigate(url=url)
-
         # wait for loading
         tab.wait(tab_wait)
 
         # stop the tab (stop handle events and stop recv message from chrome)
-        tab.stop()
+        # tab.stop()
 
         # close tab
-        self.browser.close_tab(tab)
+        # self.browser.close_tab(tab)
 
     def __del__(self):
         self.chrome_process.kill()
-
