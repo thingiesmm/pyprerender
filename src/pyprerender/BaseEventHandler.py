@@ -15,5 +15,5 @@ class BaseEventHandler(object):
             self.start_frame = frameId
 
     def frame_stopped_loading(self, frameId):
-        if self.start_frame == frameId:
-            self.tab.Page.stopLoading()
+        pass
+

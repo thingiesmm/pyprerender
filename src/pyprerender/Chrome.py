@@ -24,7 +24,8 @@ class Chrome:
         self.browser = pychrome.Browser(url='http://127.0.0.1:' + self.options['browser_debugging_port'])
 
     def new_tab(self):
-        return self.browser.new_tab()
+        tab = self.browser.new_tab()
+        return tab
 
     def close_tab(self, tab):
         try:
@@ -32,18 +33,19 @@ class Chrome:
         except:
             pass
 
-    def navigate(self, tab, url, event_handler=None, tab_wait=10):
+    def navigate(self, tab, url, event_handler=None, event_handler_kwargs=None, tab_wait=10):
         # start the tab
         if event_handler:
-            eh = event_handler(self.browser, tab)
+            eh = event_handler(self.browser, tab, **event_handler_kwargs)
             tab.Page.frameStartedLoading = eh.frame_started_loading
             tab.Page.frameStoppedLoading = eh.frame_stopped_loading
 
         tab.start()
 
-        tab.Page.stopLoading()
+        # tab.Page.stopLoading()
         # call method
         tab.Page.enable()
+        tab.Network.enable()
         # call method with timeout
         tab.Page.navigate(url=url)
         # wait for loading
