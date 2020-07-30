@@ -36,7 +36,10 @@ class Chrome:
     def navigate(self, tab, url, event_handler=None, event_handler_kwargs=None, tab_wait=10):
         # start the tab
         if event_handler:
-            eh = event_handler(self.browser, tab, **event_handler_kwargs)
+            if event_handler_kwargs:
+                eh = event_handler(self.browser, tab, **event_handler_kwargs)
+            else:
+                eh = event_handler(self.browser, tab)
             tab.Page.frameStartedLoading = eh.frame_started_loading
             tab.Page.frameStoppedLoading = eh.frame_stopped_loading
 

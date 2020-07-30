@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name='pyprerender',
-    version='0.0.4',
+    version='0.0.5',
     author='Matas Minelga',
     author_email='minematas@gmail.com',
     description='A python prerender',
