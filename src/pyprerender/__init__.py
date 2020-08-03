@@ -1,3 +1,3 @@
-from src.pyprerender.Chrome import Chrome
-from src.pyprerender.BaseEventHandler import BaseEventHandler
-from src.pyprerender.ParseHTMLEventHandler import ParseHTMLEventHandler
+from pyprerender.Chrome import Chrome
+from pyprerender.BaseEventHandler import BaseEventHandler
+from pyprerender.ParseHTMLEventHandler import ParseHTMLEventHandler

@@ -1,4 +1,4 @@
-from src.pyprerender import BaseEventHandler
+from pyprerender import BaseEventHandler
 import json
 
 
