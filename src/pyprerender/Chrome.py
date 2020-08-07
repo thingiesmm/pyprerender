@@ -5,16 +5,34 @@ import time
 
 class Chrome:
     def __init__(self, options):
+        """
+        :param options:
+            options['chrome_params']  - list, additional chrome params
+            options['override_chrome_params'] - bool, whether 'chrome_params' replaces or extends default chrome params
+            options['browser_debugging_port'] - browser debugging port
+
+        """
         self.options = options
         self.chrome_location = options['chrome_location']
-        params = [self.chrome_location,
-                  '--headless',
-                  '--disable-gpu',
-                  '--remote-debugging-port=' + self.options['browser_debugging_port'],
-                  '--hide-scrollbars',
-                  ]
+        base_params = [
+            self.chrome_location,
+            '--remote-debugging-port=' + self.options['browser_debugging_port'],
+        ]
+        default_params = [
+            '--headless',
+            '--disable-gpu',
+            '--hide-scrollbars',
+        ]
+        override_chrome_params = False
+        if 'override_chrome_params' in options:
+            override_chrome_params = options['override_chrome_params']
+
+        if override_chrome_params:
+            params = base_params
+        else:
+            params = base_params + default_params
         if 'chrome_params' in options:
-            params.extend(options['chrome_params'])
+            params += options['chrome_params']
         self.chrome_process = subprocess.Popen(params)
         self.browser = None
         time.sleep(1)

@@ -3,11 +3,23 @@ import json
 
 
 class ParseHTMLEventHandler(BaseEventHandler):
-    def __init__(self, browser, tab, enable_scrolling=False, enable_stopping=True):
+    def __init__(self, browser, tab, enable_scrolling=False, enable_stopping=True, scroll_wait=0.1,
+                 afterscroll_wait=0.5):
+        """
+
+        :param browser:
+        :param tab:
+        :param enable_scrolling: Will scroll to page end if True
+        :param enable_stopping: Will stop tab after completing
+        :param scroll_wait: Wait between scrolls
+        :param afterscroll_wait: Wait after scroll
+        """
         super().__init__(browser, tab)
         self.first_time = True
         self.enable_scrolling = enable_scrolling
         self.enable_stopping = enable_stopping
+        self.scroll_wait = scroll_wait
+        self.afterscroll_wait = afterscroll_wait
 
     def frame_started_loading(self, frameId):
         super().frame_started_loading(frameId)
@@ -21,8 +33,8 @@ class ParseHTMLEventHandler(BaseEventHandler):
             for i in range(page_size['clientHeight'], content_size['height'], page_size['clientHeight']):
                 self.tab.Runtime.evaluate(expression=f'window.scrollTo(0, {i})')
                 print('scrolling', i)
-                self.tab.wait(1)
-            self.tab.wait(2)
+                self.tab.wait(self.scroll_wait)
+            self.tab.wait(self.afterscroll_wait)
             self.first_time = False
         else:
             self.parse_html(self.tab)
@@ -55,4 +67,3 @@ class ParseHTMLEventHandler(BaseEventHandler):
                                                                                                                           + '">'
 
         tab.prerender_content = doctype + tab.prerender_content
-
