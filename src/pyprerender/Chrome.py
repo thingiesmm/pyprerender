@@ -39,7 +39,9 @@ class Chrome:
         self.connect()
 
     def connect(self):
-        self.browser = pychrome.Browser(url='http://127.0.0.1:' + self.options['browser_debugging_port'])
+        self.browser = pychrome.Browser(
+            url='http://127.0.0.1:' + self.options['browser_debugging_port']
+        )
 
     def new_tab(self):
         tab = self.browser.new_tab()
@@ -48,10 +50,12 @@ class Chrome:
     def close_tab(self, tab):
         try:
             self.browser.close_tab(tab)
-        except:
+        except:  # noqa
             pass
 
-    def navigate(self, tab, url, event_handler=None, event_handler_kwargs=None, tab_wait=10):
+    def navigate(
+        self, tab, url, event_handler=None, event_handler_kwargs=None, tab_wait=10
+    ):
         # start the tab
         if event_handler:
             if event_handler_kwargs:

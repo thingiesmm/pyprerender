@@ -3,8 +3,15 @@ import json
 
 
 class ParseHTMLEventHandler(BaseEventHandler):
-    def __init__(self, browser, tab, enable_scrolling=False, enable_stopping=True, scroll_wait=0.1,
-                 afterscroll_wait=0.5):
+    def __init__(
+        self,
+        browser,
+        tab,
+        enable_scrolling=False,
+        enable_stopping=True,
+        scroll_wait=0.1,
+        afterscroll_wait=0.5,
+    ):
         """
 
         :param browser:
@@ -30,7 +37,11 @@ class ParseHTMLEventHandler(BaseEventHandler):
             layout_metrcs = self.tab.Page.getLayoutMetrics()
             content_size = layout_metrcs['contentSize']
             page_size = layout_metrcs['visualViewport']
-            for i in range(page_size['clientHeight'], content_size['height'], page_size['clientHeight']):
+            for i in range(
+                page_size['clientHeight'],
+                content_size['height'],
+                page_size['clientHeight'],
+            ):
                 self.tab.Runtime.evaluate(expression=f'window.scrollTo(0, {i})')
                 print('scrolling', i)
                 self.tab.wait(self.scroll_wait)
@@ -45,7 +56,9 @@ class ParseHTMLEventHandler(BaseEventHandler):
 
     @staticmethod
     def parse_html(tab):
-        response = tab.Runtime.evaluate(expression="document.firstElementChild.outerHTML")
+        response = tab.Runtime.evaluate(
+            expression='document.firstElementChild.outerHTML'
+        )
         tab.prerender_content = response['result']['value']
         response = tab.Runtime.evaluate(
             expression='document.doctype && JSON.stringify({name: document.doctype.name, systemId: document.doctype.systemId, publicId: document.doctype.publicId})'
@@ -55,15 +68,17 @@ class ParseHTMLEventHandler(BaseEventHandler):
             obj = {'name': 'html'}
             try:
                 obj = json.loads(response['result']['value'])
-            except:
+            except:  # noqa
                 pass
             finally:
-                doctype = "<!DOCTYPE " + obj['name'] \
-                          + obj['publicId'] + '"' if 'publicId' in obj else '' \
-                                                                            + ' SYSTEM' if (
-                        'publicId' not in obj and 'systemId' in obj) else '' \
-                                                                          + ' "' + obj[
-                                                                              'systemId'] + '"' if 'systemId' in obj else '' \
-                                                                                                                          + '">'
+                doctype = (
+                    "<!DOCTYPE " + obj['name'] + obj['publicId'] + '"'
+                    if 'publicId' in obj
+                    else '' + ' SYSTEM'
+                    if ('publicId' not in obj and 'systemId' in obj)
+                    else '' + ' "' + obj['systemId'] + '"'
+                    if 'systemId' in obj
+                    else '' + '">'
+                )
 
         tab.prerender_content = doctype + tab.prerender_content

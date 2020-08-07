@@ -16,4 +16,3 @@ class BaseEventHandler(object):
 
     def frame_stopped_loading(self, frameId):
         pass
-
