@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name='pyprerender',
-    version='0.0.7',
+    version='0.0.8',
     author='Matas Minelga',
     author_email='minematas@gmail.com',
     description='A python prerender',
@@ -23,8 +23,8 @@ setuptools.setup(
     zip_safe=False,
     license='MIT',
     classifiers=[
-         "Programming Language :: Python :: 3",
-         "License :: OSI Approved :: MIT License",
-         "Operating System :: OS Independent",
-     ],
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
 )

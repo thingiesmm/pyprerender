@@ -9,6 +9,7 @@ class ParseHTMLEventHandler(BaseEventHandler):
         tab,
         enable_scrolling=False,
         enable_stopping=True,
+        preload_wait=0.0,
         scroll_wait=0.1,
         afterscroll_wait=0.5,
     ):
@@ -25,6 +26,7 @@ class ParseHTMLEventHandler(BaseEventHandler):
         self.first_time = True
         self.enable_scrolling = enable_scrolling
         self.enable_stopping = enable_stopping
+        self.preload_wait = preload_wait
         self.scroll_wait = scroll_wait
         self.afterscroll_wait = afterscroll_wait
 
@@ -32,6 +34,7 @@ class ParseHTMLEventHandler(BaseEventHandler):
         super().frame_started_loading(frameId)
 
     def frame_stopped_loading(self, frameId):
+        self.tab.wait(self.preload_wait)
         super().frame_stopped_loading(frameId)
         if self.first_time and self.enable_scrolling:
             layout_metrcs = self.tab.Page.getLayoutMetrics()
