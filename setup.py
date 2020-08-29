@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name='pyprerender',
-    version='0.0.8',
+    version='0.0.9',
     author='Matas Minelga',
     author_email='minematas@gmail.com',
     description='A python prerender',
@@ -20,6 +20,7 @@ setuptools.setup(
     install_requires=requirements,
     package_dir={"": "src"},
     packages=['pyprerender'],
+    scripts=['src/pyprerender/pyprerender-api.py'],
     zip_safe=False,
     license='MIT',
     classifiers=[

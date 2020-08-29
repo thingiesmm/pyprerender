@@ -1,5 +1,6 @@
 from pyprerender import BaseEventHandler
 import json
+import time
 
 
 class ParseHTMLEventHandler(BaseEventHandler):
@@ -34,7 +35,7 @@ class ParseHTMLEventHandler(BaseEventHandler):
         super().frame_started_loading(frameId)
 
     def frame_stopped_loading(self, frameId):
-        self.tab.wait(self.preload_wait)
+        time.sleep(self.preload_wait)
         super().frame_stopped_loading(frameId)
         if self.first_time and self.enable_scrolling:
             layout_metrcs = self.tab.Page.getLayoutMetrics()
