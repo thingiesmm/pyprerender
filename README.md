@@ -19,7 +19,7 @@ To install a git version, simply do this:
 
 ## Run instructions
 
-After installing just run `pyprerender-api.py` (_You may need to set your chrome bin location by running `CHROME_LOCATION=/my/chrome/location pyprerender-api.py`_)
+After installing just run `pyprerender-api.py` (You may need to set your chrome bin location by running `CHROME_LOCATION=/my/chrome/location pyprerender-api.py`)
 
 Then you can test it by running `curl "0.0.0.0:8080/render?url=https://example.com"`
 
